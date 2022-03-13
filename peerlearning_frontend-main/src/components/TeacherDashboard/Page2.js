@@ -10,6 +10,7 @@ import bottom from "../../images/bottom.png";
 import Spinner from "../Spinner/Spinner";
 import { ScoreCard } from "../ScoreCard";
 import { PieChart, Pie } from 'recharts';
+import StopPopup from "../Popups/StopPopup";
 
 function conversion(hours, minutes) {
     var t;
@@ -75,6 +76,7 @@ export default function Page2({ assg, activities, marks, reviewerCount }) {
     ];
     const [TeachersName, setTeachersName] = useState([]);
     const [spin, setspin] = useState(true);
+    const [StopReview, SetStopReview] = useState(false);
     fetch(`${G_API}/courses/${assg.courseId}/teachers`, {
         method: "GET",
         headers: {
@@ -138,8 +140,8 @@ export default function Page2({ assg, activities, marks, reviewerCount }) {
                         </div>
                         <div className={styles.pdfDiv}>
                             <button className={styles.btn1}>Check for Abnormalities </button>
-                            <button className={styles.btn2}>View student Reviews</button>
-                            <button className={styles.btn3}>Stop Peer Learning </button>
+                            <button className={styles.btn2} >View student Reviews</button>
+                            <button className={styles.btn3} onClick={() => SetStopReview(true)}>Stop Peer Learning </button>
                             <button className={styles.btn4}>View detailed Analytics </button>
                         </div>
                     </div>
@@ -229,6 +231,7 @@ export default function Page2({ assg, activities, marks, reviewerCount }) {
                     )}
                 </div>}
             {<img src={bottom} alt="Image" className={styles.bottom} />}
+            <StopPopup StopPopup={StopReview} SetStopPopup={SetStopReview} assg={assg}/>
         </>
     );
 }
